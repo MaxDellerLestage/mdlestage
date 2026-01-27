@@ -261,7 +261,7 @@ export const Home: React.FC<HomeProps> = ({
                     <>
                         {pages[0].active ?
                             <>
-                                <Nebula />
+                                
                                 <Geometries
                                 light_count={light_count}
                                 size={1.35}
@@ -269,6 +269,12 @@ export const Home: React.FC<HomeProps> = ({
                                 chrom_ab={0.5}
                                 refraction={3.2}
                                 />      
+                            </>
+                            : null
+                        }
+                        {pages[0].active && !reverse_anim ?
+                            <>
+                                <Nebula />
                             </>
                             : null
                         }
