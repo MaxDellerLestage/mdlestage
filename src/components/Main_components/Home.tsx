@@ -145,6 +145,30 @@ export const Home: React.FC<HomeProps> = ({
         new THREE.Vector3(10, 0, 0),
     ];
 
+    const leftLightRef = useRef<THREE.SpotLight>(null);
+    const rightLightRef = useRef<THREE.SpotLight>(null);
+    
+    useFrame((state) => {
+        const { clock } = state;
+
+        const time = clock.getElapsedTime();
+
+        if (leftLightRef.current) {
+            leftLightRef.current.intensity = Math.sin(time/4)*300+300;
+            leftLightRef.current.target.position.x = Math.sin(time)*2+10;
+            leftLightRef.current.target.position.z = Math.sin(time)*2;
+            leftLightRef.current.target.position.y = Math.cos(time)*2;
+            leftLightRef.current.target.updateMatrixWorld();
+        }
+
+        if (rightLightRef.current) {
+            rightLightRef.current.intensity = Math.sin(time/2)*500+1000;
+            rightLightRef.current.target.position.x = Math.sin(time)*2;
+            rightLightRef.current.target.position.z = Math.sin(time)*2;
+            rightLightRef.current.target.updateMatrixWorld();
+        }
+    })
+
     return (
         <>
             {lowLoaded ? 
@@ -199,10 +223,26 @@ export const Home: React.FC<HomeProps> = ({
                                     />
                                 </Environment>
                                 <spotLight
-                                    position={[0,20,5]}
+                                    position={[0,20,0]}
                                     intensity={2000}
                                     rotation={[-Math.PI/2,0,0]}
                                     color={[0.6,0.1,0.6]}
+                                />
+                                <spotLight 
+                                    ref={leftLightRef}
+                                    position={[-10,0,0]}
+                                    intensity={500}
+                                    angle={0.3}
+                                    penumbra={0.1}
+                                    color={[0.2,0.3,0.9]}
+                                />
+                                <spotLight 
+                                    ref={rightLightRef}
+                                    position={[10,0,0]}
+                                    intensity={500}
+                                    angle={0.1}
+                                    penumbra={0.5}
+                                    color={[0.9,0.3,0.3]}
                                 />
                                 </>
                             : null
