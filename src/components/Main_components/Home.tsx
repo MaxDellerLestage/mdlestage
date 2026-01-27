@@ -11,6 +11,7 @@ import { Nebula } from '../../components/New_neb';
 import Geometries from '../../components/Lighting_test';
 import { LightContainer } from '../../components/LightContainer';
 import { useFrame, useThree } from '@react-three/fiber';
+import { Environment, Lightformer } from '@react-three/drei';
 
 /* 
     This is the component visible when site is first accessed or when path is either '/' or 'home'.
@@ -157,13 +158,48 @@ export const Home: React.FC<HomeProps> = ({
                         <Logo />
                         {pages[0].active ?
                             <>
-                                <LightContainer 
-                                light_count={light_count}
-                                light_intensity={light_intensity}
-                                light_pos={light_pos}
-                                light_color={light_color}
-                                />
-                            </>
+                            <Environment
+                                    resolution={256}
+                                >
+                                    <Lightformer
+                                        position={[-0.08,0,0.2]}
+                                        form="rect"
+                                        intensity={15}
+                                        rotation={[0,-Math.PI/2,0]}
+                                        color={[0.1,1.0,1.0]}
+                                        scale={[0.02,2,1]}
+                                    />
+                                    <Lightformer 
+                                        position={[0,-3,4]}
+                                        form="ring"
+                                        intensity={1}
+                                        color={[0.9, 0.1, 0.2]}
+                                        scale={[5,1,1]}
+                                    />
+                                    <Lightformer 
+                                        position={[0,6,2]}
+                                        form="ring"
+                                        intensity={5}
+                                        color={[0.5, 0.1, 0.9]}
+                                        scale={[5,5,1]}
+                                    />
+                                    <Lightformer 
+                                        position={[-4,0,2]}
+                                        form="ring"
+                                        intensity={1}
+                                        color={[0.5, 0.1, 0.9]}
+                                        scale={[5,5,1]}
+                                    />
+                                    <Lightformer 
+                                        position={[2,0,4]}
+                                        form="ring"
+                                        intensity={10}
+                                        color={[0.9, 0.1, 0.2]}
+                                        scale={[5,5,1]}
+                                        
+                                    />
+                                </Environment>
+                                </>
                             : null
                         }
                     </group>
