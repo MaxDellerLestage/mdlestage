@@ -9,7 +9,6 @@ import { Logo } from '../../components/Logo';
 import { DisplayPage } from '../../components/DisplayPage';
 import { Nebula } from '../../components/New_neb';
 import Geometries from '../../components/Lighting_test';
-import { LightContainer } from '../../components/LightContainer';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Environment, Lightformer } from '@react-three/drei';
 
@@ -164,7 +163,7 @@ export const Home: React.FC<HomeProps> = ({
                                     <Lightformer
                                         position={[-0.08,0,0.2]}
                                         form="rect"
-                                        intensity={15}
+                                        intensity={5}
                                         rotation={[0,-Math.PI/2,0]}
                                         color={[0.1,1.0,1.0]}
                                         scale={[0.02,2,1]}
@@ -179,7 +178,7 @@ export const Home: React.FC<HomeProps> = ({
                                     <Lightformer 
                                         position={[0,6,2]}
                                         form="ring"
-                                        intensity={5}
+                                        intensity={1}
                                         color={[0.5, 0.1, 0.9]}
                                         scale={[5,5,1]}
                                     />
@@ -193,12 +192,18 @@ export const Home: React.FC<HomeProps> = ({
                                     <Lightformer 
                                         position={[2,0,4]}
                                         form="ring"
-                                        intensity={10}
+                                        intensity={2}
                                         color={[0.9, 0.1, 0.2]}
                                         scale={[5,5,1]}
                                         
                                     />
                                 </Environment>
+                                <spotLight
+                                    position={[0,20,5]}
+                                    intensity={2000}
+                                    rotation={[-Math.PI/2,0,0]}
+                                    color={[0.6,0.1,0.6]}
+                                />
                                 </>
                             : null
                         }
