@@ -166,7 +166,7 @@ const App: React.FC = () => {
                     <Home 
                         category_names={category_names}
                     />
-                    {current_page == 'Animation' && (global_anim || !pages[2].active) ?
+                    {current_page == 'Animation' && !global_anim ?
                         <AnimContent />
                         : null
                     }
