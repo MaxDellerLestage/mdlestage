@@ -116,7 +116,7 @@ export const Category: React.FC<CategoryProps> = ({
     }, [name]);
 
     const path = location.pathname.replace('/', '') || 'home';
-    const isActive = path == 'home';
+    const isActive = pages[0].active;
 
     // Position for line animation for hover event
     const line_pos = new THREE.Vector3(
@@ -167,8 +167,8 @@ export const Category: React.FC<CategoryProps> = ({
             await next({ position: [pos.x, pos.y, pos.z] });
             setEnter(true);
         },
-        config: { mass: 1, tension: 100, friction: 40, bounce: 0.1},
-        delay: 200*index
+        config: { mass: 1, tension: 100, friction: 30, bounce: 0.1},
+        delay: index
     });
 
     const triggerPos = useSpring({
@@ -181,8 +181,8 @@ export const Category: React.FC<CategoryProps> = ({
         scaleY: global_anim || reverse_anim
         ? 0
         : scaleY,
-        config: { duration: 1000, easing: easings.easeInCubic},
-        delay: 300*index,
+        config: { duration: 500, easing: easings.easeInCubic},
+        delay: 100*index,
         immediate: !enter
     });
 
