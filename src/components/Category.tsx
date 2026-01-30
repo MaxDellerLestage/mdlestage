@@ -2,7 +2,7 @@ import React from 'react';
 import * as THREE from 'three';
 import { a, useSpring, easings } from '@react-spring/three';
 import { Text3D, Center } from '@react-three/drei';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useLayoutEffect } from 'react';
 import { useGlobalStore } from '../stores/useGlobalStore';
 import { useModelStore } from '../stores/useModelStore';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -99,9 +99,9 @@ export const Category: React.FC<CategoryProps> = ({
 
     // Bounding box for menu item
     const textRef = useRef(null);
-    const [boundingBox, setBoundingBox] = useState<{size: THREE.Vector3, center: THREE.Vector3} | null>(null);
+    const boxRef = useRef<THREE.Mesh>(null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (textRef.current) {
 
             const box = new THREE.Box3().setFromObject(textRef.current);
@@ -110,10 +110,13 @@ export const Category: React.FC<CategoryProps> = ({
 
             box.getSize(size);
             box.getCenter(center);
-            setBoundingBox({size, center});
 
+            if (boxRef.current) {
+                boxRef.current.scale.set(size.x, size.y, size.z);
+                boxRef.current.position.copy(center);
+            }
         }
-    }, [name]);
+    }, []);
 
     const path = location.pathname.replace('/', '') || 'home';
     const isActive = pages[0].active;
@@ -204,22 +207,20 @@ export const Category: React.FC<CategoryProps> = ({
                         />
                     </Text3D>
                 </a.mesh>
-                {boundingBox && (
-                    <mesh 
-                        onClick={button}
-                        onPointerOver={() => {
-                            setHover(true)
-                        }}
-                        onPointerOut={() => {
-                            setHover(false)
-                        }}
-                        position={boundingBox.center}
-                        visible={false}
-                    >
-                        <boxGeometry args={[boundingBox.size.x, boundingBox.size.y, boundingBox.size.z]} />
-                        <meshBasicMaterial transparent opacity={1} />
-                    </mesh>
-                )}
+                <a.mesh 
+                    ref={boxRef}
+                    onClick={button}
+                    onPointerOver={() => {
+                        setHover(true)
+                    }}
+                    onPointerOut={() => {
+                        setHover(false)
+                    }}
+                    visible={false}
+                >
+                    <boxGeometry args={[1,1,1]}/>
+                    <meshBasicMaterial transparent opacity={1} />
+                </a.mesh>
             </Center>
         </a.group>
         <group
