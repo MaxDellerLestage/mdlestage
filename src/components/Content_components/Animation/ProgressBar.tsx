@@ -97,8 +97,10 @@ export function ProgressBar({width=1.6, height=0.03}) {
                 </mesh>
             </group>
             {hoverTime !== -1 ?
-                <Center onCentered={({container, height}) => container.scale.setScalar((viewport.height/height)*0.01)} position={[hoverX, -0.41, -2]}>
-                    <Text3D font={'/fonts/Ethnocentric_Regular.json'} scale={[1,1,0.2]} curveSegments={32}>
+                <Center 
+                    position={[hoverX, -0.40, -2]}
+                >
+                    <Text3D font={'/fonts/Ethnocentric_Regular.json'} scale={0.04} curveSegments={32}>
                         {formatTime(hoverTime)}
                     </Text3D>
                 </Center>
